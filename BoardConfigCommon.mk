@@ -29,7 +29,9 @@ BOARD_HAVE_SAMSUNG_AUDIO := true
 BOARD_USES_LEGACY_ALSA_AUDIO := true
 BOARD_QCOM_TUNNEL_LPA_ENABLED := true
 BOARD_QCOM_VOIP_ENABLED := true
-TARGET_QCOM_AUDIO_VARIANT := caf
+QCOM_ADSP_SSR_ENABLED := false
+QCOM_ANC_HEADSET_ENABLED := false
+QCOM_FLUENCE_ENABLED := false
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
@@ -40,8 +42,7 @@ BOARD_BLUETOOTH_USES_HCIATTACH_PROPERTY := false
 # Camera
 BOARD_CAMERA_USE_MM_HEAP := true
 COMMON_GLOBAL_CFLAGS += -DQCOM_BSP_CAMERA_ABI_HACK
-COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS
-COMMON_GLOBAL_CFLAGS += -DSAMSUNG_CAMERA_HARDWARE
+TARGET_RELEASE_CPPFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS
 
 # Charger
 BOARD_BATTERY_DEVICE_NAME := "battery"
@@ -49,12 +50,16 @@ BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/power_supply/battery/batt_lp_charg
 
 # Display
 BOARD_EGL_CFG := device/samsung/msm8660-common/configs/egl.cfg
+BOARD_USES_LEGACY_MMAP := true
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 TARGET_BOOTANIMATION_PRELOAD := true
 TARGET_DISPLAY_INSECURE_MM_HEAP := true
 TARGET_DISPLAY_USE_RETIRE_FENCE := true
+TARGET_NO_ADAPTIVE_PLAYBACK := true
 TARGET_NO_INITLOGO := true
-TARGET_QCOM_DISPLAY_VARIANT := caf
+
+# Fonts
+EXTENDED_FONT_FOOTPRINT := true
 
 # GPS
 BOARD_HAVE_NEW_QC_GPS := true
@@ -62,9 +67,11 @@ BOARD_HAVE_NEW_QC_GPS := true
 # Lights
 TARGET_PROVIDES_LIBLIGHT := true
 
+# Logging
+TARGET_USES_LOGD := false
+
 # Media
 TARGET_ENABLE_QC_AV_ENHANCEMENTS := true
-TARGET_QCOM_MEDIA_VARIANT := caf
 
 # Power
 TARGET_USES_CM_POWERHAL := true
@@ -83,35 +90,6 @@ TARGET_RELEASETOOLS_EXTENSIONS := device/samsung/msm8660-common
 # RIL
 BOARD_RIL_CLASS := ../../../device/samsung/msm8660-common/ril
 
-# SELinux
-BOARD_SEPOLICY_DIRS += \
-    device/samsung/msm8660-common/sepolicy
-
-BOARD_SEPOLICY_UNION += \
-    app.te \
-    bluetooth.te \
-    device.te \
-    domain.te \
-    drmserver.te \
-    file_contexts \
-    files \
-    file.te \
-    hci_init.te \
-    healthd.te \
-    init.te \
-    init_shell.te \
-    keystore.te \
-    kickstart.te \
-    mediaserver.te \
-    rild.te \
-    surfaceflinger.te \
-    system.te \
-    ueventd.te \
-    untrusted_app.te \
-    vold.te \
-    wpa.te \
-    wpa_socket.te
-
 # Wifi related defines
 BOARD_HAVE_SAMSUNG_WIFI := true
 BOARD_WLAN_DEVICE := bcmdhd
@@ -129,6 +107,7 @@ WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/dhd.ko"
 WIFI_DRIVER_MODULE_NAME     := "dhd"
 WIFI_DRIVER_MODULE_ARG      := "firmware_path=/system/etc/wifi/bcmdhd_sta.bin nvram_path=/system/etc/wifi/nvram_net.txt"
 WIFI_DRIVER_MODULE_AP_ARG   := "firmware_path=/system/etc/wifi/bcmdhd_apsta.bin nvram_path=/system/etc/wifi/nvram_net.txt"
+BOARD_NO_WIFI_HAL           := true
 
 # Vold
 BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true

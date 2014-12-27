@@ -20,6 +20,7 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.bluetooth_le.xml:system/etc/permissions/android.hardware.bluetooth_le.xml \
     frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
     frameworks/native/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
+    frameworks/native/data/etc/android.hardware.ethernet.xml:system/etc/permissions/android.hardware.ethernet.xml \
     frameworks/native/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
     frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml \
     frameworks/native/data/etc/android.hardware.sensor.gyroscope.xml:system/etc/permissions/android.hardware.sensor.gyroscope.xml \
@@ -51,7 +52,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.opengles.version=131072
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    lpa.decode=false
+    lpa.decode=false \
+    media.stagefright.use-awesome=true
 
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.rild.nitz_plmn="" \
@@ -84,7 +86,6 @@ PRODUCT_PACKAGES += \
     audio.a2dp.default \
     audio.usb.default \
     audio_policy.conf \
-    audio_policy.msm8660 \
     audio.primary.msm8660 \
     libaudio-resampler \
     libaudioutils
@@ -126,7 +127,11 @@ PRODUCT_PACKAGES += \
 # Media
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/media_codecs.xml:system/etc/media_codecs.xml \
-    $(LOCAL_PATH)/configs/media_profiles.xml:system/etc/media_profiles.xml
+    $(LOCAL_PATH)/configs/media_profiles.xml:system/etc/media_profiles.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_ffmpeg.xml:system/etc/media_codecs_ffmpeg.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml
 
 # NFC
 PRODUCT_PACKAGES += \
@@ -153,7 +158,11 @@ PRODUCT_PACKAGES += \
     libOmxAmrEnc \
     libOmxEvrcEnc \
     libOmxQcelp13Enc \
-    libstagefrighthw
+    libstagefrighthw \
+    qcmediaplayer
+
+PRODUCT_BOOT_JARS += \
+    qcmediaplayer
 
 # Package generation
 PRODUCT_COPY_FILES += \
@@ -162,10 +171,6 @@ PRODUCT_COPY_FILES += \
 # Power HAL
 PRODUCT_PACKAGES += \
     power.msm8660
-
-# QRNGD
-PRODUCT_PACKAGES += \
-    qrngd
 
 # Torch
 PRODUCT_PACKAGES += \
@@ -177,7 +182,13 @@ PRODUCT_PACKAGES += \
 
 # Wifi
 PRODUCT_PACKAGES += \
-    libnetcmdiface
+    dhcpcd.conf \
+    hostapd \
+    hostapd_default.conf \
+    libnetcmdiface \
+    libwpa_client \
+    wpa_supplicant \
+    wpa_supplicant.conf
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf \
